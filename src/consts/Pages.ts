@@ -6,7 +6,7 @@ export const Pages = [
   },
   {
     id: 2,
-    name: "Turnos",
+    name: "Mis Turnos",
     path: "/turnos",
   },
 ];
