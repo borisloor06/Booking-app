@@ -5,6 +5,8 @@ import { getSlotsByService } from "./services/getSlotsByService";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import Layout from "./Layout/Layout";
+import Booking from "./Layout/Pages/Booking/Booking";
+import MyBookings from "./Layout/Pages/MyBookings/MyBookings";
 
 function App() {
   getCategories().then((categories) =>
@@ -18,8 +20,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="/reservar" />} />
-          <Route path="/reservar" element={<div>Reservar</div>} />
-          <Route path="/turnos" element={<div>Turnos</div>} />
+          <Route path="/reservar" element={<Booking />} />
+          <Route path="/turnos" element={<MyBookings />} />
         </Route>
       </Routes>
     </BrowserRouter>
