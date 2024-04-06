@@ -16,7 +16,7 @@ const DropdownCard = ({
     onOptionSelect(option.id);
   };
   return (
-    <article className="border p-2 m-2 flex flex-col justify-around bg-white">
+    <article className="border p-2 m-2 flex flex-col gap-1 justify-around bg-white">
       <h3>{option.name}</h3>
       <p>{option.description}</p>
       <Button selected={isSelected} onClick={handleClick} className="ms-auto">
