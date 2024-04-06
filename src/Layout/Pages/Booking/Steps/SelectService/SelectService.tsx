@@ -33,7 +33,7 @@ function SelectService({
 
   return (
     <section className="border-2 p-2 max-h-fit">
-      <h2 className="text-sm">Categorías</h2>
+      <h2 className="text-sm text-slate-600 font-medium ms-1">Categorías</h2>
       {categories.length > 0 ? (
         categories.map((category) => (
           <Dropdown

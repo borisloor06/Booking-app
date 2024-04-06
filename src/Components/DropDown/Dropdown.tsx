@@ -18,7 +18,6 @@ const Dropdown = ({
   selectedOption,
   toggleDropdown,
 }: DropdownProps) => {
-
   const selectOption = (option: number) => {
     if (onOptionSelect) {
       onOptionSelect(option);
@@ -31,11 +30,13 @@ const Dropdown = ({
         className="bg-slate-50 px-4 w-full flex justify-between"
         onClick={toggleDropdown}
       >
-        <span className="text-sm">{dropdownName}</span>
+        <span className="text-sm font-semibold text-slate-500">
+          {dropdownName}
+        </span>
         {isOpen ? (
-          <p className="font-sans font-extrabold">-</p>
+          <p className="text-slate-500 font-mono font-black">-</p>
         ) : (
-          <p className="font-sans font-extrabold">+</p>
+          <p className="text-slate-500 font-mono font-black">+</p>
         )}
       </button>
       {isOpen && (
