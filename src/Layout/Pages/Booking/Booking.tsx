@@ -6,13 +6,25 @@ import useSelectService from "./Hooks/useSelectService";
 import BookingFooter from "./Footer/BookingFooter";
 import useStepper from "./Hooks/useStepper";
 import useSelectSlot from "./Hooks/useSelectSlot";
+import {
+  BookingContext,
+  BookingContextType,
+} from "../BookingProvider/BookingProvider";
+import { useContext } from "react";
 
 function Booking() {
   const { slots, selectedService, onServiceSelect } = useSelectService();
-  const { pages, page, handleNext, handlePreview } = useStepper();
+  const { pages, page, setPage, handleNext, handlePreview } = useStepper();
   const { slotSelected, onSlotSelect } = useSelectSlot();
+  const { booking } = useContext(BookingContext) as BookingContextType;
+  console.log("booking", booking);
 
-  const validBooking = selectedService && slotSelected;
+  if (booking.service && booking.slot && page === 0) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onServiceSelect(booking.service);
+    onSlotSelect(booking.slot);
+    setPage(2)
+  }
 
   return (
     <section className="grid grid-rows-[auto_1fr_auto] h-full gap-2">
@@ -31,11 +43,8 @@ function Booking() {
             slotSelected={slotSelected}
           />
         )}
-        {page === 2 && validBooking && (
-          <ConfirmBooking
-            selectedService={selectedService!}
-            slotSelected={slotSelected!}
-          />
+        {page === 2 && booking.slot && booking.service && (
+          <ConfirmBooking booking={booking} />
         )}
       </main>
       {selectedService && (
