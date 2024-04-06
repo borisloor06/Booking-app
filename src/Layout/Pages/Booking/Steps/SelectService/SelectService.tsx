@@ -1,16 +1,21 @@
 import Dropdown from "../../../../../Components/DropDown/Dropdown";
 import { Service } from "../../../../../Interfaces/Services";
-import useCategories from "../../Hooks/useCategories";
 
 function SelectService({
   onOptionSelect,
   selectedOption,
+  categorySelected,
+  handleDropdownToggle,
+  options,
+  categories,
 }: {
   onOptionSelect: (option: Service) => void;
   selectedOption: Service | null;
+  categorySelected: string;
+  handleDropdownToggle: (category: string) => void;
+  options: Service[];
+  categories: string[];
 }) {
-  const { categories, categorySelected, handleDropdownToggle, options } =
-    useCategories();
 
   return (
     <section className="border-2 p-2 max-h-fit">
