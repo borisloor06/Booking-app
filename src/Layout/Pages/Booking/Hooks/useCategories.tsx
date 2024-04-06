@@ -23,7 +23,7 @@ export const useCategories = () => {
     setCategorySelected(categorySelected === index ? null : index);
   };
 
-  return { categories, categorySelected, handleDropdownToggle, options };
+  return { categories, categorySelected, handleDropdownToggle, options, setCategorySelected };
 };
 
 export default useCategories;

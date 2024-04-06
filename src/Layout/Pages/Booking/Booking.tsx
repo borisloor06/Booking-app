@@ -11,12 +11,21 @@ import {
   BookingContextType,
 } from "../BookingProvider/BookingProvider";
 import { useContext } from "react";
+import useCategories from "./Hooks/useCategories";
 
 function Booking() {
   const { slots, selectedService, onServiceSelect } = useSelectService();
   const { pages, handleNext, handlePreview } = useStepper();
   const { slotSelected, onSlotSelect } = useSelectSlot();
-  const { booking, page, setPage } = useContext(BookingContext) as BookingContextType;
+  const { booking, page, setPage } = useContext(
+    BookingContext
+  ) as BookingContextType;
+  const { categories, categorySelected, handleDropdownToggle, options, setCategorySelected } =
+    useCategories();
+
+  if (booking.service && !slotSelected && !selectedService) {
+    setCategorySelected(booking.service.category);
+  }
 
   if (booking.service && booking.slot && !slotSelected && !selectedService) {
     onServiceSelect(booking.service);
@@ -38,14 +47,18 @@ function Booking() {
         {page === 0 && (
           <SelectService
             onOptionSelect={onServiceSelect}
-            selectedOption={selectedService}
+            selectedOption={selectedService!}
+            categorySelected={categorySelected!}
+            handleDropdownToggle={handleDropdownToggle}
+            options={options}
+            categories={categories}
           />
         )}
         {page === 1 && (
           <Schedules
             onSlotSelect={onSlotSelect}
             slots={slots}
-            slotSelected={slotSelected}
+            slotSelected={slotSelected!}
           />
         )}
         {page === 2 && booking.slot && booking.service && (
