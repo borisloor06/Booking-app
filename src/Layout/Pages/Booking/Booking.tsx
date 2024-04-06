@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SelectService from "./Steps/SelectService/SelectService";
 import Stepper from "../../../Components/Stepper/Stepper";
 import Button from "../../../Components/Button/Button";
 import Schedules from "./Steps/Schedules/Schedules";
+import { getSlotsByService } from "../../../services/getSlotsByService";
+import { Slot } from "../../../Interfaces/Slots";
 
 function Booking() {
   const [page, setPage] = useState<number>(0);
@@ -11,13 +13,23 @@ function Booking() {
     "Seleccionar horario",
     "Confirmar turno",
   ];
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [selectedService, setSelectedService] = useState<number | null>(null);
+  const [slots, setSlots] = useState<Slot[]>([]);
+
+  useEffect(() => {
+    if (selectedService) {
+      getSlotsByService(selectedService).then((slots) => {
+        setSlots(slots);
+      });
+    }
+  }, [selectedService]);
+
   const onOptionSelect = (option: number) => {
-    if (option === selectedOption) {
-      setSelectedOption(null);
+    if (option === selectedService) {
+      setSelectedService(null);
       return;
     }
-    setSelectedOption(option);
+    setSelectedService(option);
   };
 
   return (
@@ -29,29 +41,31 @@ function Booking() {
         {page === 0 && (
           <SelectService
             onOptionSelect={onOptionSelect}
-            selectedOption={selectedOption}
+            selectedOption={selectedService}
           />
         )}
-        {page === 1 && <Schedules />}
+        {page === 1 && <Schedules slots={slots} />}
       </main>
-      <footer className="flex justify-between row-start-3 h-10 mb-0">
-        <Button
-          onClick={() => setPage(page - 1)}
-          hidden={page === 0}
-          selected={true}
-          className={page == 2 ? "bg-slate-400" : ""}
-        >
-          Anterior
-        </Button>
-        <Button
-          onClick={() => setPage(page + 1)}
-          hidden={page === 0 && !selectedOption}
-          selected={true}
-          className="ms-auto"
-        >
-          {page === 2 ? "Finalizar" : "Siguiente"}
-        </Button>
-      </footer>
+      {selectedService && (
+        <footer className="flex justify-between row-start-3 h-16 mb-0 border-y-2 -mx-4 py-3 px-4">
+          <Button
+            onClick={() => setPage(page - 1)}
+            hidden={page === 0}
+            selected={true}
+            className={page == 2 ? "bg-slate-400" : ""}
+          >
+            Anterior
+          </Button>
+          <Button
+            onClick={() => setPage(page + 1)}
+            hidden={page === 0 && !selectedService}
+            selected={true}
+            className="ms-auto"
+          >
+            {page === 2 ? "Finalizar" : "Siguiente"}
+          </Button>
+        </footer>
+      )}
     </section>
   );
 }
