@@ -5,8 +5,8 @@ interface DropdownProps {
   options: Service[];
   dropdownName: string;
   isOpen: boolean;
-  onOptionSelect?: (option: number) => void;
-  selectedOption: number | null;
+  onOptionSelect?: (option: Service) => void;
+  selectedOption: Service | null;
   toggleDropdown: () => void;
 }
 
@@ -18,7 +18,7 @@ const Dropdown = ({
   selectedOption,
   toggleDropdown,
 }: DropdownProps) => {
-  const selectOption = (option: number) => {
+  const selectOption = (option: Service) => {
     if (onOptionSelect) {
       onOptionSelect(option);
     }
@@ -46,7 +46,7 @@ const Dropdown = ({
               key={option.id}
               option={option}
               onOptionSelect={selectOption}
-              isSelected={selectedOption === option.id}
+              isSelected={selectedOption?.id === option.id}
             />
           ))}
         </section>

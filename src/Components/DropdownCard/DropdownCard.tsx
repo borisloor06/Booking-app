@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 
 interface DropdownCardProps {
   option: Service;
-  onOptionSelect: (option: number) => void;
+  onOptionSelect: (option: Service) => void;
   isSelected: boolean;
 }
 
@@ -13,7 +13,7 @@ const DropdownCard = ({
   isSelected,
 }: DropdownCardProps) => {
   const handleClick = () => {
-    onOptionSelect(option.id);
+    onOptionSelect(option);
   };
   return (
     <article className="border p-2 m-2 flex flex-col gap-1 justify-around bg-white">

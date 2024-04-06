@@ -8,8 +8,8 @@ function SelectService({
   onOptionSelect,
   selectedOption,
 }: {
-  onOptionSelect: (option: number) => void;
-  selectedOption: number | null;
+  onOptionSelect: (option: Service) => void;
+  selectedOption: Service | null;
 }) {
   const [categories, setCategories] = useState<string[]>([]);
   const [categorySelected, setCategorySelected] = useState<string | null>(null);

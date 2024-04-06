@@ -3,3 +3,8 @@ export interface Slot {
   serviceId: number;
   availableTimeslots: string[];
 }
+
+export interface SlotSelected {
+  date: string;
+  time: string;
+}
