@@ -24,6 +24,7 @@ export const useSelectService = () => {
       return;
     }
     setSelectedService(option);
+    if (slots.length > 0) setSlots([]);
     setBookingWithUpdater((prev: Booking) => ({ ...prev, service: option }));
   };
 

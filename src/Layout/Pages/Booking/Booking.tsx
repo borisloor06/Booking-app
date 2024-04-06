@@ -14,16 +14,21 @@ import { useContext } from "react";
 
 function Booking() {
   const { slots, selectedService, onServiceSelect } = useSelectService();
-  const { pages, page, setPage, handleNext, handlePreview } = useStepper();
+  const { pages, handleNext, handlePreview } = useStepper();
   const { slotSelected, onSlotSelect } = useSelectSlot();
-  const { booking } = useContext(BookingContext) as BookingContextType;
-  console.log("booking", booking);
+  const { booking, page, setPage } = useContext(BookingContext) as BookingContextType;
 
-  if (booking.service && booking.slot && page === 0) {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  if (booking.service && booking.slot && !slotSelected && !selectedService) {
     onServiceSelect(booking.service);
     onSlotSelect(booking.slot);
-    setPage(2)
+  }
+
+  if (booking.service && !booking.slot && !slotSelected && !selectedService) {
+    onServiceSelect(booking.service);
+  }
+
+  if (page) {
+    setPage(page);
   }
 
   return (
