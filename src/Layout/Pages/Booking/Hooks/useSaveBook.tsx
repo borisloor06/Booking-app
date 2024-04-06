@@ -6,13 +6,17 @@ import {
 import { useNavigate } from "react-router-dom";
 
 export const useSaveBook = () => {
-  const { booking, setBookingsWithUpdater } = useContext(
+  const { booking, setBookingsWithUpdater, setBookingWithUpdater } = useContext(
     BookingContext
   ) as BookingContextType;
   const navigate = useNavigate();
 
   const saveBook = () => {
     setBookingsWithUpdater((prev) => [...prev, booking]);
+    setBookingWithUpdater(() => ({
+      service: undefined,
+      slot: undefined,
+    }));
     navigate("/turnos");
   };
 
