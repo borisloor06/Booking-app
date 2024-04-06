@@ -6,7 +6,7 @@ export const useSelectSlot = () => {
   const [slotSelected, setSlotSelected] = useState<SlotSelected | undefined>(undefined);
   const { setBookingWithUpdater } = useContext(BookingContext) as BookingContextType;
   const onSlotSelect = (slot: SlotSelected) => {
-    if (slotSelected?.time === slot.time && slotSelected?.date === slot.date) {
+    if (slotSelected?.time === slot.time ) {
       setSlotSelected(undefined);
       setBookingWithUpdater((prev) => ({ ...prev, slot: undefined }));
       return;
