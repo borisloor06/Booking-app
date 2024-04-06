@@ -25,6 +25,7 @@ function App() {
             <Route path="/reservar" element={<Booking />} />
             <Route path="/turnos" element={<MyBookings />} />
           </Route>
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </BookingProvider>
     </BrowserRouter>
