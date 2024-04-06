@@ -1,47 +1,22 @@
-import { useState, useEffect } from "react";
 import DropdownCard from "../DropdownCard/DropdownCard";
 import { Service } from "../../Interfaces/Services";
 
 interface DropdownProps {
-  loadOptions: (dropdownName: string) => Promise<Service[]>;
+  options: Service[];
   dropdownName: string;
-  defaultValue: number;
+  isOpen: boolean;
   onOptionSelect?: (option: number) => void;
+  toggleDropdown: () => void;
 }
 
 const Dropdown = ({
-  loadOptions,
+  options,
   dropdownName,
-  defaultValue,
+  isOpen,
   onOptionSelect,
+  toggleDropdown,
 }: DropdownProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<number>(defaultValue);
-  const [options, setOptions] = useState<Service[]>([]);
-
-  useEffect(() => {
-    const fetchOptions = async () => {
-      const fetchedOptions = await loadOptions(dropdownName);
-      setOptions(fetchedOptions);
-    };
-
-    if (isOpen && options.length === 0) {
-      fetchOptions();
-    }
-  }, [isOpen, loadOptions, dropdownName, options.length]);
-
-  const toggleDropdown = async () => {
-    setIsOpen(!isOpen);
-
-    if (!isOpen && options.length === 0) {
-      const fetchedOptions = await loadOptions(dropdownName);
-      setOptions(fetchedOptions);
-    }
-  };
-
   const selectOption = (option: number) => {
-    setSelectedOption(option);
-    setIsOpen(false);
     if (onOptionSelect) {
       onOptionSelect(option);
     }
@@ -49,16 +24,19 @@ const Dropdown = ({
 
   return (
     <article className="w-full my-2">
-      <button className="bg-slate-50 px-4 py-2 my-1  w-full flex justify-between" onClick={toggleDropdown}>
+      <button
+        className="bg-slate-50 px-4 mb-1  w-full flex justify-between"
+        onClick={toggleDropdown}
+      >
         <span>{dropdownName}</span>
         {isOpen ? (
-          <p>cerrar</p>
+          <p className="font-sans font-extrabold">-</p>
         ) : (
-          <p>abrir</p>
+          <p className="font-sans font-extrabold">+</p>
         )}
       </button>
       {isOpen && (
-        <section>
+        <section className="max-h-64 overflow-auto">
           {options.map((option) => (
             <DropdownCard
               key={option.id}
