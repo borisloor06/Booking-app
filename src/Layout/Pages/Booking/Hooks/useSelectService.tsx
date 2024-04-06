@@ -7,7 +7,7 @@ import { Booking } from "../../../../Interfaces/Booking";
 
 export const useSelectService = () => {
   const { setBookingWithUpdater } = useContext(BookingContext) as BookingContextType;
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [selectedService, setSelectedService] = useState<Service | undefined>(undefined);
   const [slots, setSlots] = useState<Slot[]>([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export const useSelectService = () => {
 
   const onServiceSelect = (option: Service) => {
     if (option === selectedService) {
-      setSelectedService(null);
+      setSelectedService(undefined);
       return;
     }
     setSelectedService(option);

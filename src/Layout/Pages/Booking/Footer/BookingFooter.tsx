@@ -19,8 +19,7 @@ function BookingFooter({
       <Button
         onClick={() => handlePreview()}
         hidden={page === 0}
-        selected={true}
-        className={page == 2 ? "bg-slate-400" : ""}
+        selected={page !== 2}
       >
         Anterior
       </Button>
