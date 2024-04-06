@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
-import { getCategories } from "../../../../../services/getCategories";
 import Dropdown from "../../../../../Components/DropDown/Dropdown";
-import { getServicesByCategory } from "../../../../../services/getServicesByCategory";
 import { Service } from "../../../../../Interfaces/Services";
+import useCategories from "../../Hooks/useCategories";
 
 function SelectService({
   onOptionSelect,
@@ -11,25 +9,8 @@ function SelectService({
   onOptionSelect: (option: Service) => void;
   selectedOption: Service | null;
 }) {
-  const [categories, setCategories] = useState<string[]>([]);
-  const [categorySelected, setCategorySelected] = useState<string | null>(null);
-  const [options, setOptions] = useState<Service[]>([]);
-
-  const handleDropdownToggle = (index: string) => {
-    setCategorySelected(categorySelected === index ? null : index);
-  };
-
-  useEffect(() => {
-    if (!categories.length) {
-      getCategories().then((_categories) => setCategories(_categories));
-    }
-
-    if (categorySelected) {
-      getServicesByCategory(categorySelected).then((_services) =>
-        setOptions(_services)
-      );
-    }
-  }, [categorySelected, categories]);
+  const { categories, categorySelected, handleDropdownToggle, options } =
+    useCategories();
 
   return (
     <section className="border-2 p-2 max-h-fit">

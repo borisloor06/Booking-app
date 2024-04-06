@@ -15,7 +15,7 @@ function Schedules({
       {slots.map((slot) => (
         <article
           key={slot.date}
-          className="grid grid-cols-1 gap-4 p-4 text-slate-600 font-semibold bg-slate-50 text-sm"
+          className="grid grid-cols-1 gap-4 p-4 text-slate-600 font-semibold border-2 text-sm"
         >
           <h2 className="">{slot.date}</h2>
           <section className="grid grid-cols-2 gap-x-10 gap-y-2">

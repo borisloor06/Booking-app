@@ -1,42 +1,18 @@
-import { useEffect, useState } from "react";
 import SelectService from "./Steps/SelectService/SelectService";
 import Stepper from "../../../Components/Stepper/Stepper";
-import Button from "../../../Components/Button/Button";
 import Schedules from "./Steps/Schedules/Schedules";
-import { getSlotsByService } from "../../../services/getSlotsByService";
-import { Slot, SlotSelected } from "../../../Interfaces/Slots";
-import { Service } from "../../../Interfaces/Services";
+import ConfirmBooking from "./Steps/ConfirmBooking/ConfirmBooking";
+import useSelectService from "./Hooks/useSelectService";
+import BookingFooter from "./Footer/BookingFooter";
+import useStepper from "./Hooks/useStepper";
+import useSelectSlot from "./Hooks/useSelectSlot";
 
 function Booking() {
-  const [page, setPage] = useState<number>(0);
-  const pages = [
-    "Seleccionar servicio",
-    "Seleccionar horario",
-    "Confirmar turno",
-  ];
-  const [selectedService, setSelectedService] = useState<Service | null>(null);
-  const [slots, setSlots] = useState<Slot[]>([]);
-  const [slotSelected, setSlotSelected] = useState<SlotSelected | null>(null);
+  const { slots, selectedService, onServiceSelect } = useSelectService();
+  const { pages, page, handleNext, handlePreview } = useStepper();
+  const { slotSelected, onSlotSelect } = useSelectSlot();
 
-  useEffect(() => {
-    if (selectedService) {
-      getSlotsByService(selectedService.id).then((slots) => {
-        setSlots(slots);
-      });
-    }
-  }, [selectedService]);
-
-  const onServiceSelect = (option: Service) => {
-    if (option === selectedService) {
-      setSelectedService(null);
-      return;
-    }
-    setSelectedService(option);
-  };
-
-  const onSlotSelect = (time: SlotSelected) => {
-    setSlotSelected(time);
-  };
+  const validBooking = selectedService && slotSelected;
 
   return (
     <section className="grid grid-rows-[auto_1fr_auto] h-full gap-2">
@@ -55,38 +31,21 @@ function Booking() {
             slotSelected={slotSelected}
           />
         )}
-        {page === 2 && (
-          <article className="grid grid-cols-1 gap-4 p-4 text-slate-600 font-semibold bg-slate-50 text-sm">
-            <h2 className="">Confirmar turno</h2>
-            <section className="grid grid-cols-1 gap-2">
-              <p>Servicio: {selectedService?.description}</p>
-              <p>
-                Horario: {slotSelected?.date} {slotSelected?.time}
-              </p>
-            </section>
-          </article>
+        {page === 2 && validBooking && (
+          <ConfirmBooking
+            selectedService={selectedService!}
+            slotSelected={slotSelected!}
+          />
         )}
       </main>
       {selectedService && (
-        <footer className="flex justify-between row-start-3 h-16 mb-0 border-y-2 -mx-4 py-3 px-4">
-          <Button
-            onClick={() => setPage(page - 1)}
-            hidden={page === 0}
-            selected={true}
-            className={page == 2 ? "bg-slate-400" : ""}
-          >
-            Anterior
-          </Button>
-          <Button
-            onClick={() => setPage(page + 1)}
-            hidden={page === 0 && !selectedService}
-            selected={true}
-            disabled={page === 1 && (slots.length === 0 || !slotSelected)}
-            className="ms-auto"
-          >
-            {page === 2 ? "Confirmar" : "Siguiente"}
-          </Button>
-        </footer>
+        <BookingFooter
+          page={page}
+          handlePreview={handlePreview}
+          handleNext={handleNext}
+          selectedService={selectedService}
+          disableNext={page === 1 && (slots.length === 0 || !slotSelected)}
+        />
       )}
     </section>
   );
