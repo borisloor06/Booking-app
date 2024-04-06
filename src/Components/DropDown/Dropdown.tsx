@@ -6,6 +6,7 @@ interface DropdownProps {
   dropdownName: string;
   isOpen: boolean;
   onOptionSelect?: (option: number) => void;
+  selectedOption: number | null;
   toggleDropdown: () => void;
 }
 
@@ -14,8 +15,10 @@ const Dropdown = ({
   dropdownName,
   isOpen,
   onOptionSelect,
+  selectedOption,
   toggleDropdown,
 }: DropdownProps) => {
+
   const selectOption = (option: number) => {
     if (onOptionSelect) {
       onOptionSelect(option);
@@ -42,6 +45,7 @@ const Dropdown = ({
               key={option.id}
               option={option}
               onOptionSelect={selectOption}
+              isSelected={selectedOption === option.id}
             />
           ))}
         </section>
