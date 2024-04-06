@@ -26,7 +26,7 @@ function SelectService() {
   }, [categorySelected]);
 
   return (
-    <article className="border-2 p-2 max-h-full overflow-hidden scroll-auto">
+    <article className="border-2 p-2 max-h-fit overflow-hidden scroll-auto">
       <h2>Categorías</h2>
       {categories.length > 0 ? (
         categories.map((category) => (
