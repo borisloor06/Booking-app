@@ -1,6 +1,7 @@
 import { useState } from "react";
 import SelectService from "./Steps/SelectService/SelectService";
 import Stepper from "../../../Components/Stepper/Stepper";
+import Button from "../../../Components/Button/Button";
 
 function Booking() {
   const [page, setPage] = useState<number>(0);
@@ -9,29 +10,43 @@ function Booking() {
     "Seleccionar horario",
     "Confirmar turno",
   ];
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const onOptionSelect = (option: number) => {
+    setSelectedOption(option);
+  };
+
   return (
     <section className="grid grid-rows-[auto_1fr_auto] h-full gap-2">
       {/** Add stepper*/}
 
       <Stepper activeStep={page} steps={pages} />
       <main className="row-start-2 overflow-auto">
-        {page === 0 && <SelectService />}
+        {page === 0 && (
+          <SelectService
+            onOptionSelect={onOptionSelect}
+            selectedOption={selectedOption}
+          />
+        )}
       </main>
       <footer className="flex justify-between row-start-3 h-10 mb-0">
-        <button
+        <Button
           onClick={() => setPage(page - 1)}
           disabled={page === 0}
-          className="bg-blue-500 text-white p-2 rounded-md"
+          hidden={page === 0}
+          selected={true}
+          className=""
         >
           Anterior
-        </button>
-        <button
+        </Button>
+        <Button
           onClick={() => setPage(page + 1)}
           disabled={page === 2}
-          className="bg-blue-500 text-white p-2 rounded-md"
+          hidden={page === 0 && !selectedOption}
+          selected={true}
+          className="ms-auto"
         >
           {page === 2 ? "Finalizar" : "Siguiente"}
-        </button>
+        </Button>
       </footer>
     </section>
   );

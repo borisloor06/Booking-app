@@ -4,7 +4,13 @@ import Dropdown from "../../../../../Components/DropDown/Dropdown";
 import { getServicesByCategory } from "../../../../../services/getServicesByCategory";
 import { Service } from "../../../../../Interfaces/Services";
 
-function SelectService() {
+function SelectService({
+  onOptionSelect,
+  selectedOption,
+}: {
+  onOptionSelect: (option: number) => void;
+  selectedOption: number | null;
+}) {
   const [categories, setCategories] = useState<string[]>([]);
   const [categorySelected, setCategorySelected] = useState<string | null>(null);
   const [options, setOptions] = useState<Service[]>([]);
@@ -36,6 +42,8 @@ function SelectService() {
             options={options}
             dropdownName={category}
             toggleDropdown={() => handleDropdownToggle(category)}
+            onOptionSelect={onOptionSelect}
+            selectedOption={selectedOption}
           />
         ))
       ) : (
