@@ -23,11 +23,11 @@ function SelectService() {
         setOptions(_services)
       );
     }
-  }, [categorySelected]);
+  }, [categorySelected, categories]);
 
   return (
-    <article className="border-2 p-2 max-h-fit overflow-hidden scroll-auto">
-      <h2>Categorías</h2>
+    <section className="border-2 p-2 max-h-fit">
+      <h2 className="text-sm">Categorías</h2>
       {categories.length > 0 ? (
         categories.map((category) => (
           <Dropdown
@@ -41,7 +41,7 @@ function SelectService() {
       ) : (
         <p>Cargando...</p>
       )}
-    </article>
+    </section>
   );
 }
 
