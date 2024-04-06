@@ -2,6 +2,7 @@ import { useState } from "react";
 import SelectService from "./Steps/SelectService/SelectService";
 import Stepper from "../../../Components/Stepper/Stepper";
 import Button from "../../../Components/Button/Button";
+import Schedules from "./Steps/Schedules/Schedules";
 
 function Booking() {
   const [page, setPage] = useState<number>(0);
@@ -31,6 +32,7 @@ function Booking() {
             selectedOption={selectedOption}
           />
         )}
+        {page === 1 && <Schedules />}
       </main>
       <footer className="flex justify-between row-start-3 h-10 mb-0">
         <Button
