@@ -7,6 +7,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Layout from "./Layout/Layout";
 import Booking from "./Layout/Pages/Booking/Booking";
 import MyBookings from "./Layout/Pages/MyBookings/MyBookings";
+import BookingProvider from "./Layout/Pages/BookingProvider/BookingProvider";
 
 function App() {
   getCategories().then((categories) =>
@@ -17,13 +18,15 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Navigate to="/reservar" />} />
-          <Route path="/reservar" element={<Booking />} />
-          <Route path="/turnos" element={<MyBookings />} />
-        </Route>
-      </Routes>
+      <BookingProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Navigate to="/reservar" />} />
+            <Route path="/reservar" element={<Booking />} />
+            <Route path="/turnos" element={<MyBookings />} />
+          </Route>
+        </Routes>
+      </BookingProvider>
     </BrowserRouter>
   );
 }
