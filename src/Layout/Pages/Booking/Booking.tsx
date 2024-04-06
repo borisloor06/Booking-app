@@ -12,6 +12,10 @@ function Booking() {
   ];
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const onOptionSelect = (option: number) => {
+    if (option === selectedOption) {
+      setSelectedOption(null);
+      return;
+    }
     setSelectedOption(option);
   };
 
@@ -31,16 +35,14 @@ function Booking() {
       <footer className="flex justify-between row-start-3 h-10 mb-0">
         <Button
           onClick={() => setPage(page - 1)}
-          disabled={page === 0}
           hidden={page === 0}
           selected={true}
-          className=""
+          className={page == 2 ? "bg-slate-400" : ""}
         >
           Anterior
         </Button>
         <Button
           onClick={() => setPage(page + 1)}
-          disabled={page === 2}
           hidden={page === 0 && !selectedOption}
           selected={true}
           className="ms-auto"
