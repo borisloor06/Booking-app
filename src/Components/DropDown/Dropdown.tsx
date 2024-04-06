@@ -25,10 +25,10 @@ const Dropdown = ({
   return (
     <article className="w-full my-2">
       <button
-        className="bg-slate-50 px-4 mb-1  w-full flex justify-between"
+        className="bg-slate-50 px-4 w-full flex justify-between"
         onClick={toggleDropdown}
       >
-        <span>{dropdownName}</span>
+        <span className="text-sm">{dropdownName}</span>
         {isOpen ? (
           <p className="font-sans font-extrabold">-</p>
         ) : (
@@ -36,7 +36,7 @@ const Dropdown = ({
         )}
       </button>
       {isOpen && (
-        <section className="max-h-64 overflow-auto">
+        <section className="max-h-fit">
           {options.map((option) => (
             <DropdownCard
               key={option.id}
